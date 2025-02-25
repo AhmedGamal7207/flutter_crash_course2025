@@ -4,11 +4,15 @@ void main() {
   runApp(const MyApp());
 }
 
-String? title = "Jimmy";
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int navigationIndex = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,40 +23,25 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int navigationBarIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title!), centerTitle: true),
-      bottomNavigationBar: NavigationBar(
-        destinations: [
-          NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-          NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
-        ],
-        onDestinationSelected: (value) {
-          setState(() {
-            navigationBarIndex = value;
-          });
-        },
-        selectedIndex: navigationBarIndex,
+      home: Scaffold(
+        appBar: AppBar(title: Text("Jimmy App"), centerTitle: true),
+        bottomNavigationBar: NavigationBar(
+          destinations: [
+            NavigationDestination(icon: Icon(Icons.home), label: "Home"),
+            NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
+          ],
+          onDestinationSelected: (value) {
+            setState(() {
+              navigationIndex = value;
+            });
+          },
+          selectedIndex: navigationIndex,
+        ),
+        body:
+            navigationIndex == 0
+                ? Center(child: Text("Home"))
+                : Center(child: Text("Profile")),
       ),
-      body:
-          navigationBarIndex == 0
-              ? Center(child: Text("Home"))
-              : Center(child: Text("Profile")),
     );
   }
 }
