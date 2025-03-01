@@ -31,6 +31,52 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
+              ElevatedButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: Duration(seconds: 3),
+                      behavior: SnackBarBehavior.floating,
+                      content: Text("Hello Jimmy"),
+                    ),
+                  );
+                },
+                child: Text("Show Snackbar"),
+              ),
+              Divider(
+                color: Colors.teal,
+                thickness: 5,
+                endIndent: 100,
+                indent: 100,
+                height: 50, // height makes padding
+              ),
+              SizedBox(
+                height: 30,
+                child: VerticalDivider(thickness: 5, color: Colors.teal),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Alert Title"),
+                        content: Text("This is an Alert!!"),
+                        actions: [
+                          CloseButton(),
+                          FilledButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Close"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Text("Show Alert"),
+              ),
               TextField(
                 controller: controller,
                 decoration: InputDecoration(
@@ -103,7 +149,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   setState(() {});
                 },
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Click Me")),
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
