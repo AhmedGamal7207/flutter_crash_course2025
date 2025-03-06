@@ -11,12 +11,16 @@ class HeroWidget extends StatelessWidget {
       children: [
         Hero(
           tag: "forest_hero",
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(
-              "assets/images/login_bg.jpg",
-              color: Colors.teal,
-              colorBlendMode: BlendMode.darken,
+          child: AspectRatio(
+            aspectRatio: 1920 / 1080,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                "assets/images/login_bg.jpg",
+                color: Colors.teal,
+                colorBlendMode: BlendMode.darken,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

@@ -16,31 +16,39 @@ class HomePage extends StatelessWidget {
       AppSections.md,
       AppSections.ml,
     ];
+    // double screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return CoursePage();
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return FractionallySizedBox(
+              widthFactor: constraints.maxWidth > 500 ? 0.7 : 1.0,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CoursePage();
+                          },
+                        ),
+                      );
                     },
+                    child: HeroWidget(title: "Home"),
                   ),
-                );
-              },
-              child: HeroWidget(title: "Home"),
-            ),
-            ...List.generate(appSections.length, (index) {
-              return ContainerWidget(
-                title: appSections.elementAt(index),
-                description: "${appSections.elementAt(index)} is Cool!",
-              );
-            }),
-          ],
+                  ...List.generate(appSections.length, (index) {
+                    return ContainerWidget(
+                      title: appSections.elementAt(index),
+                      description: "${appSections.elementAt(index)} is Cool!",
+                    );
+                  }),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
