@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_app2025/data/classes/employee_class.dart';
 import 'package:flutter_app2025/views/widgets/hero_widget.dart';
 
-import 'dart:convert' as convert;
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class CoursePage extends StatefulWidget {
@@ -18,16 +21,23 @@ class _CoursePageState extends State<CoursePage> {
     super.initState();
   }
 
+  late Employee myEmp;
   void getData() async {
-    var url = Uri.https('catfact.ninja', '/fact');
-    var response = await http.get(url);
+    final response = await http.get(
+      Uri.parse('https://boringapi.com/api/v1/employees/123'),
+    );
+
     if (response.statusCode == 200) {
-      var jsonResponse =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      var fact = jsonResponse['fact'];
-      print('Number of books about http: $fact.');
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      myEmp = Employee.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
+      log(myEmp.firstName);
     } else {
-      print('Request failed with status: ${response.statusCode}.');
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load the employee');
     }
   }
 
