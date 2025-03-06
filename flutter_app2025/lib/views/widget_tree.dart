@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app2025/data/constants.dart';
 import 'package:flutter_app2025/data/notifiers.dart';
 import 'package:flutter_app2025/views/pages/home_page.dart';
 import 'package:flutter_app2025/views/pages/profile_page.dart';
 import 'package:flutter_app2025/views/pages/settings_page.dart';
 import 'package:flutter_app2025/views/widgets/navbar_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<Widget> pages = [HomePage(), ProfilePage()];
 
@@ -18,8 +20,14 @@ class WidgetTree extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
               isDarkModeNotifier.value = !isDarkModeNotifier.value;
+              await prefs.setBool(
+                KeyConstants.isDarkKey,
+                isDarkModeNotifier.value,
+              );
             },
             icon: ValueListenableBuilder(
               valueListenable: isDarkModeNotifier,

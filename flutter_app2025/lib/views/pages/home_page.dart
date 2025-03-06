@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app2025/data/constants.dart';
+import 'package:flutter_app2025/views/pages/course_page.dart';
+import 'package:flutter_app2025/views/widgets/container_widget.dart';
 import 'package:flutter_app2025/views/widgets/hero_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,31 +9,39 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          HeroWidget(title: "Home"),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Title", style: MyTextStyles.titleTextStyle),
-                    Text(
-                      "Description",
-                      style: MyTextStyles.descriptionTextStyle,
-                    ),
-                  ],
-                ),
-              ),
+    const List<String> appSections = [
+      AppSections.ai,
+      AppSections.cs,
+      AppSections.sd,
+      AppSections.md,
+      AppSections.ml,
+    ];
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return CoursePage();
+                    },
+                  ),
+                );
+              },
+              child: HeroWidget(title: "Home"),
             ),
-          ),
-        ],
+            ...List.generate(appSections.length, (index) {
+              return ContainerWidget(
+                title: appSections.elementAt(index),
+                description: "${appSections.elementAt(index)} is Cool!",
+              );
+            }),
+          ],
+        ),
       ),
     );
   }
